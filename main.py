@@ -25,6 +25,7 @@ class Game:
         self.clock = pg.time.Clock()
         self.load_data()
     def load_data(self):
+        global map_choice
         game_folder = path.dirname(__file__)
         self.map_data = []
         '''
@@ -32,7 +33,7 @@ class Game:
         It is used to ensure that a resource is properly closed or released 
         after it is used. This can help to prevent errors and leaks.
         '''
-        with open(path.join(game_folder, 'map.txt'), 'rt') as f:
+        with open(path.join(game_folder, map_choice), 'rt') as f:
             for line in f:
                 print(line)
                 self.map_data.append(line)
@@ -59,8 +60,10 @@ class Game:
                     self.player = Player(self, col, row)   
                 if tile == 'M':
                     Mob(self, col, row)
-                if tile == 'U':
-                    PowerUp(self, col, row)
+                if tile != '1':
+                    number = random.randint(1,150)
+                    if number == 4:
+                        PowerUp(self, col, row)
                 if tile != '1':
                     number = random.randint(1,150)
                     if number == 4:
@@ -108,6 +111,8 @@ class Game:
             self.draw_text(self.screen, "Coins 2" + str(self.player.moneybag), 24, WHITE, WIDTH/2 - 32, 2)
             pg.draw.rect(self.screen, LIGHTGREY, pg.Rect(0,0,320,32))
             pg.draw.rect(self.screen, RED, pg.Rect(0,0,HEALTH *32,32))
+            #self.draw_text(self.screen,str(HEALTH), 21 + int((HEALTH/3)) , WHITE, HEALTH * 16 - 13, 1 + int((10+HEALTH/12)/HEALTH))
+            self.draw_text(self.screen,str(HEALTH), 24, WHITE, HEALTH * 16 - (HEALTH*0.05 * 20),3)
             
             pg.display.flip()
     
@@ -126,22 +131,36 @@ class Game:
             #     if event.key == pg.K_DOWN:
             #         self.player.move(dy=1)
                 
+    
+                
 
     def show_start_screen(self):
         self.screen.fill(BGCOLOR)
-        self.draw_text(self.screen, "This is the start screen - press any key to play", 24, WHITE, WIDTH/2 - 200, HEIGHT/2 - 24)
+        self.draw_text(self.screen, "This is the start screen - press mouse button to play", 24, WHITE, WIDTH/2 - 230, HEIGHT/2 - 150)
+        self.draw_text(self.screen, "For map 1 click 1     For map 2 click 2     For map 3 click 3", 24, WHITE, WIDTH/2 - 250, HEIGHT/2)
         pg.display.flip()
         self.wait_for_key()
 
     def wait_for_key(self):
+        keys = pg.key.get_pressed()
         waiting = True
         while waiting:
+            if keys[pg.K_1]:
+                map_choice = 'map.txt'
+                #g = Game()
+            if keys[pg.K_2]:
+                map_choice = 'map1.txt'
+                #g = Game()
+                print ('You Chose map 2')
+            if keys[pg.K_3]:
+                map_choice = 'map2.txt'
+        
             self.clock.tick(FPS)
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     waiting = False
                     self.quit()
-                if event.type == pg.KEYUP:
+                if event.type == pg.MOUSEBUTTONDOWN:
                     waiting = False
 
 # Instantiate the game... 
