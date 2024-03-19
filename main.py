@@ -153,8 +153,9 @@ class Game:
             pg.draw.rect(self.screen, RED, pg.Rect(0,0,HEALTH *32,32))
             #self.draw_text(self.screen,str(HEALTH), 21 + int((HEALTH/3)) , WHITE, HEALTH * 16 - 13, 1 + int((10+HEALTH/12)/HEALTH))
             self.draw_text(self.screen,str(HEALTH), 24, WHITE, HEALTH * 16 - (HEALTH*0.05 * 20),3)
-            
+            self.draw_text(self.screen,"Multiplier: " + str(self.player.money_multiplier) + " x", 30, WHITE, 800,0)
             pg.display.flip()
+            
     
 
     def events(self):
@@ -217,6 +218,7 @@ class Game:
 
 # Instantiate the game... 
 g = Game()
+
 # use game method run to run
 g.show_start_screen()
 while True:
