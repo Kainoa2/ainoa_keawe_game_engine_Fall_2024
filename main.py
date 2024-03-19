@@ -23,7 +23,7 @@ class Game:
         pg.display.set_caption(TITLE)
         # setting game clock 
         self.clock = pg.time.Clock()
-        self.load_data()
+        # self.load_data()
     def load_data(self):
         global map_choice
         game_folder = path.dirname(__file__)
@@ -40,6 +40,7 @@ class Game:
 
     # Create run method which runs the whole GAME
     def new(self):
+        self.load_data()
         print("create new game...")
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
@@ -99,7 +100,46 @@ class Game:
         text_rect = text_surface.get_rect()
         text_rect.topleft = (x,y)
         surface.blit(text_surface, text_rect)
-    
+
+
+    def change_level(self, lvl):
+        # kill all existing sprites first to save memory
+        for s in self.all_sprites:
+            s.kill()
+        # reset criteria for changing level
+        self.player.moneybag = 0
+        # reset map data list to empty
+        self.map_data = []
+        # open next level
+        with open(path.join(self.game_folder, lvl), 'rt') as f:
+            for line in f:
+                print(line)
+                self.map_data.append(line)
+        # repopulate the level with stuff
+        for row, tiles in enumerate(self.map_data):
+            print(row)
+            for col, tile in enumerate(tiles):
+                print(col)
+                if tile == '1':
+                    print("a wall at", row, col)
+                    Wall(self, col, row)
+                if tile == 'P':
+                    self.player = Player(self, col, row)   
+                if tile == 'M':
+                    Mob(self, col, row)
+                if tile != '1':
+                    number = random.randint(1,150)
+                    if number == 4:
+                        PowerUp(self, col, row)
+                if tile != '1':
+                    number = random.randint(1,150)
+                    if number == 4:
+                        Coin(self, col, row)
+
+
+
+
+
     def draw(self):
             global HEALTH
             keys = pg.key.get_pressed()
@@ -108,7 +148,7 @@ class Game:
             self.screen.fill(BGCOLOR)
             self.draw_grid()
             self.all_sprites.draw(self.screen)
-            self.draw_text(self.screen, "Coins 2" + str(self.player.moneybag), 24, WHITE, WIDTH/2 - 32, 2)
+            self.draw_text(self.screen, "Coins  " + str(self.player.moneybag), 24, WHITE, WIDTH/2 - 32, 2)
             pg.draw.rect(self.screen, LIGHTGREY, pg.Rect(0,0,320,32))
             pg.draw.rect(self.screen, RED, pg.Rect(0,0,HEALTH *32,32))
             #self.draw_text(self.screen,str(HEALTH), 21 + int((HEALTH/3)) , WHITE, HEALTH * 16 - 13, 1 + int((10+HEALTH/12)/HEALTH))
@@ -145,15 +185,15 @@ class Game:
         keys = pg.key.get_pressed()
         waiting = True
         while waiting:
-            if keys[pg.K_1]:
-                map_choice = 'map.txt'
-                #g = Game()
-            if keys[pg.K_2]:
-                map_choice = 'map1.txt'
-                #g = Game()
-                print ('You Chose map 2')
-            if keys[pg.K_3]:
-                map_choice = 'map2.txt'
+            # if keys[pg.K_1]:
+            #     map_choice = 'map.txt'
+            #     #g = Game()
+            # if keys[pg.K_2]:
+            #     map_choice = 'map1.txt'
+            #     #g = Game()
+            #     print ('You Chose map 2')
+            # if keys[pg.K_3]:
+            #     map_choice = 'map2.txt'
         
             self.clock.tick(FPS)
             for event in pg.event.get():
@@ -161,6 +201,18 @@ class Game:
                     waiting = False
                     self.quit()
                 if event.type == pg.MOUSEBUTTONDOWN:
+                    waiting = False
+                if event.type == keys[pg.K_1]:
+                    map_choice = 'map.txt'
+                    waiting = False
+                #g = Game()
+                if event.type == keys[pg.K_2]:
+                    map_choice = 'map1.txt'
+                    waiting = False
+                    #g = Game()
+                    print ('You Chose map 2')
+                if event.type == keys[pg.K_3]:
+                    map_choice = 'map2.txt'
                     waiting = False
 
 # Instantiate the game... 

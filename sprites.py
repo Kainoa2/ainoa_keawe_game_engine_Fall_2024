@@ -2,6 +2,7 @@
 # This code was inspired by Zelda and informed by Chris Bradfield
 import pygame as pg
 from settings import *
+import random
 
 class Player(pg.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -18,6 +19,10 @@ class Player(pg.sprite.Sprite):
         self.moneybag = 0
         self.speed = 300
         self.health = 10
+        self.has_speed = False
+        self.has_coin = False
+        self.money_multiplier = 1
+        
     
     def get_keys(self):
         global HEALTH
@@ -69,13 +74,23 @@ class Player(pg.sprite.Sprite):
                 self.rect.y = self.y
     # made possible by Aayush's question!
     def collide_with_group(self, group, kill):
+        global HEALTH
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
             if str(hits[0].__class__.__name__) == "Coin":
-                self.moneybag += 1
+                self.moneybag += 1 * self.money_multiplier
             if str(hits[0].__class__.__name__) == "PowerUp":
                 print(hits[0].__class__.__name__)
-                self.speed += 25
+                if random.randint(1,2) == 1:
+                    self.speed += 100
+                    self.has_speed = True
+                else:
+                    self.money_multiplier = 2
+                    self.has_coin = True
+            if str(hits[0].__class__.__name__) == "Mob":
+                print(hits[0].__class__.__name__)
+                HEALTH -= 1
+                
 
     def update(self):
         self.get_keys()
@@ -89,6 +104,8 @@ class Player(pg.sprite.Sprite):
         self.collide_with_walls('y')
         self.collide_with_group(self.game.coins, True)
         self.collide_with_group(self.game.power_ups, True)
+        #self.collide_with_group(self.game.mobs, False)
+        
           
         # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
         # if coin_hits:
