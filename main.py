@@ -52,6 +52,7 @@ class Game:
         # self.player1 = Player(self, 1, 1)
         # for x in range(10, 20):
         #     Wall(self, x, 5)
+        #Loops through all the positions in the grid
         for row, tiles in enumerate(self.map_data):
             print(row)
             for col, tile in enumerate(tiles):
@@ -67,7 +68,7 @@ class Game:
                     number = random.randint(1,150)
                     if number == 4:
                         PowerUp(self, col, row)
-                        self.power_ups.count += 1
+                        #self.power_ups.count += 1
                 if tile != '1':
                     number = random.randint(1,150)
                     if number == 4:
@@ -76,7 +77,7 @@ class Game:
                 #if self.coins.count < 5:
                     #print ("I have less than 5 coins")
 
-
+    #Define the run function that will run the game
     def run(self):
         # 
         self.playing = True
@@ -85,19 +86,22 @@ class Game:
             self.events()
             self.update()
             self.draw()
+    #define a quit function
     def quit(self):
          pg.quit()
          sys.exit()
-
+    #runs all code that draws sprites and updates their position
     def update(self):
         self.all_sprites.update()
     
+    #draw a grid for the map
     def draw_grid(self):
          for x in range(0, WIDTH, TILESIZE):
               pg.draw.line(self.screen, LIGHTGREY, (x, 0), (x, HEIGHT))
          for y in range(0, HEIGHT, TILESIZE):
               pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
-    
+
+    #define function to draw text in draw() function
     def draw_text(self, surface, text, size, color, x, y):
         font_name = pg.font.match_font('arial')
         font = pg.font.Font(font_name, size)
@@ -106,7 +110,7 @@ class Game:
         text_rect.topleft = (x,y)
         surface.blit(text_surface, text_rect)
 
-
+    #define function for future uses to choose/change maps
     def change_level(self, lvl):
         # kill all existing sprites first to save memory
         for s in self.all_sprites:
@@ -144,7 +148,7 @@ class Game:
 
 
 
-
+    #defining function to draw everything on the screen
     def draw(self):
             global HEALTH
             keys = pg.key.get_pressed()
@@ -162,7 +166,7 @@ class Game:
             pg.display.flip()
             
     
-
+    # Define a function to quit
     def events(self):
          for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -179,7 +183,7 @@ class Game:
                 
     
                 
-
+    #Define a function to create Start screen
     def show_start_screen(self):
         self.screen.fill(BGCOLOR)
         self.draw_text(self.screen, "This is the start screen - press mouse button to play", 24, WHITE, WIDTH/2 - 230, HEIGHT/2 - 150)
@@ -187,6 +191,8 @@ class Game:
         pg.display.flip()
         self.wait_for_key()
 
+       
+    #Define a function to create Start screen
     def wait_for_key(self):
         keys = pg.key.get_pressed()
         waiting = True

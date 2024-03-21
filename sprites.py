@@ -3,7 +3,7 @@
 import pygame as pg
 from settings import *
 import random
-
+#define Player class
 class Player(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites
@@ -80,9 +80,9 @@ class Player(pg.sprite.Sprite):
         if hits:
             if str(hits[0].__class__.__name__) == "Coin":
                 self.moneybag += 1 * self.money_multiplier
-                self.coins.count -= 1
+                #self.coins.count -= 1
             if str(hits[0].__class__.__name__) == "PowerUp":
-                self.power_ups.count -= 1
+                #self.power_ups.count -= 1
                 print(hits[0].__class__.__name__)
                 if random.randint(1,2) == 1:
                     self.speed += 100
@@ -113,7 +113,7 @@ class Player(pg.sprite.Sprite):
         # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
         # if coin_hits:
         #     print("I got a coin")
-        
+#Define a class for Walls        
 class Wall(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.walls
@@ -126,7 +126,7 @@ class Wall(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
-
+#Define a class for Coins       
 class Coin(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.coins
@@ -140,7 +140,7 @@ class Coin(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
         self.count = 0
-
+#Define a class for PowerUps        
 class PowerUp(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.power_ups
@@ -154,7 +154,7 @@ class PowerUp(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
         self.count = 0
-        
+#Define a class for Mobs              
 class Mob(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.mobs
@@ -169,6 +169,7 @@ class Mob(pg.sprite.Sprite):
         self.x = x * TILESIZE
         self.y = y * TILESIZE
         self.speed = 1
+    #Defining a function to check if the player is collding with another sprite
     def collide_with_walls(self, dir):
         if dir == 'x':
             # print('colliding on the x')
