@@ -11,6 +11,8 @@ import sys
 from os import path
 
 HEALTH = 10
+#def create_account():
+
 
 # Define game class...
 class Game:
@@ -65,11 +67,14 @@ class Game:
                     number = random.randint(1,150)
                     if number == 4:
                         PowerUp(self, col, row)
+                        self.power_ups.count += 1
                 if tile != '1':
                     number = random.randint(1,150)
                     if number == 4:
                         Coin(self, col, row)
-
+                        #self.coins.count += 1
+                #if self.coins.count < 5:
+                    #print ("I have less than 5 coins")
 
 
     def run(self):
@@ -203,18 +208,19 @@ class Game:
                     self.quit()
                 if event.type == pg.MOUSEBUTTONDOWN:
                     waiting = False
-                if event.type == keys[pg.K_1]:
-                    map_choice = 'map.txt'
-                    waiting = False
-                #g = Game()
-                if event.type == keys[pg.K_2]:
-                    map_choice = 'map1.txt'
-                    waiting = False
-                    #g = Game()
-                    print ('You Chose map 2')
-                if event.type == keys[pg.K_3]:
-                    map_choice = 'map2.txt'
-                    waiting = False
+                # if event.type == keys[pg.K_1]:
+                #     map_choice = 'map.txt'
+                #     waiting = False
+                # #g = Game()
+                # if event.type == keys[pg.K_2]:
+                #     map_choice = 'map1.txt'
+                #     waiting = False
+                #     #g = Game()
+                #     print ('You Chose map 2')
+                # if event.type == keys[pg.K_3]:
+                #     map_choice = 'map2.txt'
+                #     waiting = False
+
 
 # Instantiate the game... 
 g = Game()

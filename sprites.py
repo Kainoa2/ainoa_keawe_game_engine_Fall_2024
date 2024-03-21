@@ -22,6 +22,7 @@ class Player(pg.sprite.Sprite):
         self.has_speed = False
         self.has_coin = False
         self.money_multiplier = 1
+        self.account = ""
         
     
     def get_keys(self):
@@ -79,13 +80,15 @@ class Player(pg.sprite.Sprite):
         if hits:
             if str(hits[0].__class__.__name__) == "Coin":
                 self.moneybag += 1 * self.money_multiplier
+                self.coins.count -= 1
             if str(hits[0].__class__.__name__) == "PowerUp":
+                self.power_ups.count -= 1
                 print(hits[0].__class__.__name__)
                 if random.randint(1,2) == 1:
                     self.speed += 100
                     self.has_speed = True
                 else:
-                    self.money_multiplier = 2
+                    self.money_multiplier += 1
                     self.has_coin = True
             if str(hits[0].__class__.__name__) == "Mob":
                 print(hits[0].__class__.__name__)
@@ -136,6 +139,7 @@ class Coin(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
+        self.count = 0
 
 class PowerUp(pg.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -149,6 +153,7 @@ class PowerUp(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
+        self.count = 0
         
 class Mob(pg.sprite.Sprite):
     def __init__(self, game, x, y):
