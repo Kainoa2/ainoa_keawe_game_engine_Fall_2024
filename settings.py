@@ -6,7 +6,7 @@ FPS = 30
 TITLE = "My Fun Game"
 
 TILESIZE = 32
-map_choice = 'map.txt'
+map_choice = 'map1.txt'
 
 BLACK = (0,0,0)
 WHITE = (255,255,255)

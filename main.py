@@ -69,11 +69,13 @@ class Game:
                     if number == 4:
                         PowerUp(self, col, row)
                         #self.power_ups.count += 1
+                if tile == "C":
+                    Coin(self,col,row)
                 if tile != '1':
                     number = random.randint(1,150)
                     if number == 4:
                         Coin(self, col, row)
-                        #self.coins.count += 1
+                        #Coin.count += 1
                 #if self.coins.count < 5:
                     #print ("I have less than 5 coins")
 
@@ -150,7 +152,6 @@ class Game:
 
     #defining function to draw everything on the screen
     def draw(self):
-            global HEALTH
             keys = pg.key.get_pressed()
             if keys[pg.K_1]:
                 HEALTH -= 1
@@ -159,9 +160,9 @@ class Game:
             self.all_sprites.draw(self.screen)
             self.draw_text(self.screen, "Coins  " + str(self.player.moneybag), 24, WHITE, WIDTH/2 - 32, 2)
             pg.draw.rect(self.screen, LIGHTGREY, pg.Rect(0,0,320,32))
-            pg.draw.rect(self.screen, RED, pg.Rect(0,0,HEALTH *32,32))
+            pg.draw.rect(self.screen, RED, pg.Rect(0,0,self.player.health *32,32))
             #self.draw_text(self.screen,str(HEALTH), 21 + int((HEALTH/3)) , WHITE, HEALTH * 16 - 13, 1 + int((10+HEALTH/12)/HEALTH))
-            self.draw_text(self.screen,str(HEALTH), 24, WHITE, HEALTH * 16 - (HEALTH*0.05 * 20),3)
+            self.draw_text(self.screen,str(self.player.health), 24, WHITE, self.player.health * 16 - (self.player.health*0.05 * 20),3)
             self.draw_text(self.screen,"Multiplier: " + str(self.player.money_multiplier) + " x", 30, WHITE, 800,0)
             pg.display.flip()
             
