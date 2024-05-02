@@ -65,14 +65,14 @@ class Game:
                 if tile == 'M':
                     Mob(self, col, row)
                 if tile != '1':
-                    number = random.randint(1,150)
+                    number = random.randint(1,80)
                     if number == 4:
                         PowerUp(self, col, row)
                         #self.power_ups.count += 1
                 if tile == "C":
                     Coin(self,col,row)
                 if tile != '1':
-                    number = random.randint(1,150)
+                    number = random.randint(1,100)
                     if number == 4:
                         Coin(self, col, row)
                         #Coin.count += 1
@@ -138,12 +138,14 @@ class Game:
                     self.player = Player(self, col, row)   
                 if tile == 'M':
                     Mob(self, col, row)
+                if tile == 'L':
+                    Interactable_platform(self,col,row)
                 if tile != '1':
-                    number = random.randint(1,150)
+                    number = random.randint(1,80)
                     if number == 4:
                         PowerUp(self, col, row)
                 if tile != '1':
-                    number = random.randint(1,150)
+                    number = random.randint(1,100)
                     if number == 4:
                         Coin(self, col, row)
 

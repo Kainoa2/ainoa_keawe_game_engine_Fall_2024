@@ -32,10 +32,12 @@ class Player(pg.sprite.Sprite):
         global HEALTH
         self.vx, self.vy = 0, 0
         keys = pg.key.get_pressed()
-        #if keys[pg.K_1]:
-            #HEALTH -= 1
+        # if keys[pg.K_1]:
+        #     HEALTH -= 1
         if keys[pg.K_LEFT]:
-            instances[0].vx = -self.speed  
+            self.all_sprites[0].vx = -self.speed
+        if keys[pg.K_a]:
+            self.all_sprites[1].vx = -self.speed
         # if keys[pg.K_RIGHT] or keys[pg.K_d]:
         #     self.vx = self.speed  
         # if keys[pg.K_UP] or keys[pg.K_w]:
@@ -226,7 +228,7 @@ class Interactable_platform(pg.sprite.Sprite):
         self.groups = game.all_sprites, game.walls
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pg.Surface((TILESIZE, TILESIZE))
+        self.image = pg.Surface((TIjun76hLESIZE, TILESIZE))
         self.image.fill(PURPLE)
         self.rect = self.image.get_rect()
         self.x = x
